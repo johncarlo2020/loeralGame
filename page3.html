@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Image</title>
+    <style>
+          @font-face {
+            font-family: 'Gotham';
+            src: url('fonts/Gotham-Book.woff2') format('woff2'),
+                 url('fonts/Gotham-Book.woff') format('woff'),
+                 url('fonts/Gotham-Book.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background: url('images/bg3.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        .oil1 {
+            position: absolute;
+            top: 20%;
+            left: 11%;
+            width: 16%;
+            height: auto;
+            z-index: 1;
+        }
+        .oil2 {
+            position: absolute;
+            top: 32%;
+            left: 27%;
+            width: 13%;
+            height: auto;
+            z-index: 1;
+        }
+        .oil3 {
+            position: absolute;
+            top: 47%;
+            left: 39%;
+            width: 15%;
+            height: auto;
+            z-index: 1;
+        }
+
+        .blink {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            width: 17%;
+            height: auto;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/oil1.png" alt="" class="oil1">
+    <img src="images/oil2.png" alt="" class="oil2">
+    <img src="images/oil3.png" alt="" class="oil3">
+    <img src="images/blink.png" alt="" class="blink">
+
+
+    <script>
+        function startFullscreen() {
+            document.getElementById('startButton').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
