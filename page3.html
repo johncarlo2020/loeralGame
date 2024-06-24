@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fullscreen Image</title>
     <style>
-          @font-face {
+        @font-face {
             font-family: 'Gotham';
             src: url('fonts/Gotham-Book.woff2') format('woff2'),
                  url('fonts/Gotham-Book.woff') format('woff'),
@@ -22,52 +22,121 @@
             background-size: cover;
             position: relative;
         }
-        .oil1 {
-            position: absolute;
-            top: 20%;
-            left: 11%;
-            width: 16%;
-            height: auto;
-            z-index: 1;
+        #startButton {
+            display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 74%;
+    height: 5%;
+    font-size: 120%;
+    color: black;
+    background-color: white;
+    font-family: 'Gotham', sans-serif;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
         }
-        .oil2 {
+        .oil {
             position: absolute;
-            top: 32%;
-            left: 27%;
-            width: 13%;
-            height: auto;
-            z-index: 1;
-        }
-        .oil3 {
-            position: absolute;
-            top: 47%;
-            left: 39%;
             width: 15%;
             height: auto;
             z-index: 1;
+            transition: transform 1s ease, opacity 1s ease;
         }
-
-        .blink {
-            position: absolute;
-            top: 48%;
-            left: 50%;
-            width: 17%;
-            height: auto;
-            z-index: 1;
+        .oil1 {
+            top: 20%;
+            left: 11%;
         }
+        .oil2 {
+            top: 32%;
+            left: 27%;
+        }
+        .oil3 {
+            top: 47%;
+            left: 39%;
+        }
+      
     </style>
 </head>
 <body>
-    <img src="images/oil1.png" alt="" class="oil1">
-    <img src="images/oil2.png" alt="" class="oil2">
-    <img src="images/oil3.png" alt="" class="oil3">
-    <img src="images/blink.png" alt="" class="blink">
-
+    <img src="images/oil1.png" alt="" class="oil oil1">
+    <img src="images/oil2.png" alt="" class="oil oil2">
+    <img src="images/oil3.png" alt="" class="oil oil3">
 
     <script>
-        function startFullscreen() {
-            document.getElementById('startButton').style.display = 'none';
+  
+        let startX, startY;
+        let swipedImages = 0;
+
+        function handleSwipeStart(event) {
+            startX = event.touches ? event.touches[0].clientX : event.clientX;
+            startY = event.touches ? event.touches[0].clientY : event.clientY;
         }
+
+        function handleSwipeMove(event) {
+            if (!startX || !startY) return;
+
+            let endX = event.touches ? event.touches[0].clientX : event.clientX;
+            let endY = event.touches ? event.touches[0].clientY : event.clientY;
+
+            let diffX = endX - startX;
+            let diffY = endY - startY;
+
+            let angle = Math.atan2(diffY, diffX) * 180 / Math.PI;
+
+            let direction;
+            if (angle >= -22.5 && angle < 22.5) {
+                direction = 'translateX(100%)'; // right
+            } else if (angle >= 22.5 && angle < 67.5) {
+                direction = 'translate(100%, 100%)'; // bottom-right
+            } else if (angle >= 67.5 && angle < 112.5) {
+                direction = 'translateY(100%)'; // bottom
+            } else if (angle >= 112.5 && angle < 157.5) {
+                direction = 'translate(-100%, 100%)'; // bottom-left
+            } else if (angle >= -67.5 && angle < -22.5) {
+                direction = 'translate(100%, -100%)'; // top-right
+            } else if (angle >= -112.5 && angle < -67.5) {
+                direction = 'translateY(-100%)'; // top
+            } else if (angle >= -157.5 && angle < -112.5) {
+                direction = 'translate(-100%, -100%)'; // top-left
+            } else {
+                direction = 'translateX(-100%)'; // left
+            }
+
+            event.target.style.transform = direction;
+            event.target.style.opacity = 0;
+
+            swipedImages++;
+            if (swipedImages >= 3) {
+                window.location.href = 'page5.html'; // Change 'newpage.html' to your desired page URL
+            }
+
+            startX = null;
+            startY = null;
+        }
+
+        const oils = document.querySelectorAll('.oil');
+
+        oils.forEach(oil => {
+            oil.addEventListener('mousedown', handleSwipeStart);
+            oil.addEventListener('mousemove', handleSwipeMove);
+            oil.addEventListener('mouseup', () => {
+                startX = null;
+                startY = null;
+            });
+
+            oil.addEventListener('touchstart', handleSwipeStart);
+            oil.addEventListener('touchmove', handleSwipeMove);
+            oil.addEventListener('touchend', () => {
+                startX = null;
+                startY = null;
+            });
+        });
     </script>
 </body>
 </html>
