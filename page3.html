@@ -60,6 +60,10 @@
             top: 47%;
             left: 39%;
         }
+        .oil4 {
+            top: 30%;
+            left: 47%;
+        }
       
     </style>
 </head>
@@ -67,15 +71,26 @@
     <img src="images/oil1.png" alt="" class="oil oil1">
     <img src="images/oil2.png" alt="" class="oil oil2">
     <img src="images/oil3.png" alt="" class="oil oil3">
+    <img src="images/oil4.png" alt="" class="oil oil4">
 
     <script>
   
         let startX, startY;
         let swipedImages = 0;
 
+
+
         function handleSwipeStart(event) {
             startX = event.touches ? event.touches[0].clientX : event.clientX;
             startY = event.touches ? event.touches[0].clientY : event.clientY;
+        }
+
+        function handleClick(event) {
+            event.target.style.opacity = 0;
+            swipedImages++;
+            if (swipedImages >= 4) {
+                window.location.href = 'page5.html'; // Change 'newpage.html' to your desired page URL
+            }
         }
 
         function handleSwipeMove(event) {
@@ -123,19 +138,21 @@
         const oils = document.querySelectorAll('.oil');
 
         oils.forEach(oil => {
-            oil.addEventListener('mousedown', handleSwipeStart);
-            oil.addEventListener('mousemove', handleSwipeMove);
-            oil.addEventListener('mouseup', () => {
-                startX = null;
-                startY = null;
-            });
+             oil.addEventListener('click', handleClick);
 
-            oil.addEventListener('touchstart', handleSwipeStart);
-            oil.addEventListener('touchmove', handleSwipeMove);
-            oil.addEventListener('touchend', () => {
-                startX = null;
-                startY = null;
-            });
+            // oil.addEventListener('mousedown', handleSwipeStart);
+            // oil.addEventListener('mousemove', handleSwipeMove);
+            // oil.addEventListener('mouseup', () => {
+            //     startX = null;
+            //     startY = null;
+            // });
+
+            // oil.addEventListener('touchstart', handleSwipeStart);
+            // oil.addEventListener('touchmove', handleSwipeMove);
+            // oil.addEventListener('touchend', () => {
+            //     startX = null;
+            //     startY = null;
+            // });
         });
     </script>
 </body>
