@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fullscreen Image</title>
     <style>
-        @font-face {
-            font-family: 'Gotham';
-            src: url('fonts/Gotham-Book.woff2') format('woff2'),
-                 url('fonts/Gotham-Book.woff') format('woff'),
-                 url('fonts/Gotham-Book.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background: url('images/bg6.png') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-        #videoContainer {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60%; /* Adjust width as needed */
-            z-index: 1; /* Ensure the video is above other content */
-            background-color: red;
-        }
+      @font-face {
+        font-family: "Gotham";
+        src: url("fonts/Gotham-Book.woff2") format("woff2"),
+          url("fonts/Gotham-Book.woff") format("woff"),
+          url("fonts/Gotham-Book.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: url("images/bg6.png") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+      }
+      #videoContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%; /* Adjust width as needed */
+        z-index: 1; /* Ensure the video is above other content */
+        background-color: red;
+      }
 
-        #introVideo {
-            width: 100%;
-            height: auto;
-        }
+      #introVideo {
+        width: 100%;
+        height: auto;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="videoContainer">
-        <video id="introVideo" src="videos/video.mp4" controls></video>
+      <video id="introVideo" src="videos/video.mp4" autoplay muted></video>
     </div>
-</body>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const video = document.getElementById('introVideo');
-        const startButton = document.getElementById('startButton');
-        
-            // Event listener for when the video ends
-            video.addEventListener('ended', () => {
-                // Redirect to the next page
-                window.location.href = 'page7.html';
-            });
-       
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const video = document.getElementById("introVideo");
+      const startButton = document.getElementById("startButton");
+
+      // Event listener for when the video ends
+      video.addEventListener("ended", () => {
+        // Redirect to the next page
+        window.location.href = "page7.html";
+      });
     });
-</script>
+  </script>
 </html>

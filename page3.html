@@ -1,159 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fullscreen Image</title>
     <style>
-        @font-face {
-            font-family: 'Gotham';
-            src: url('fonts/Gotham-Book.woff2') format('woff2'),
-                 url('fonts/Gotham-Book.woff') format('woff'),
-                 url('fonts/Gotham-Book.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background: url('images/bg3.png') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-        #startButton {
-            display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 74%;
-    height: 5%;
-    font-size: 120%;
-    color: black;
-    background-color: white;
-    font-family: 'Gotham', sans-serif;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    position: absolute;
-    bottom: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-        }
-        .oil {
-            position: absolute;
-            width: 15%;
-            height: auto;
-            z-index: 1;
-            transition: transform 1s ease, opacity 1s ease;
-        }
-        .oil1 {
-            top: 20%;
-            left: 11%;
-        }
-        .oil2 {
-            top: 32%;
-            left: 27%;
-        }
-        .oil3 {
-            top: 47%;
-            left: 39%;
-        }
-        .oil4 {
-            top: 30%;
-            left: 47%;
-        }
-      
+      @font-face {
+        font-family: "Gotham";
+        src: url("fonts/Gotham-Book.woff2") format("woff2"),
+          url("fonts/Gotham-Book.woff") format("woff"),
+          url("fonts/Gotham-Book.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: url("images/bg3.png") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+      }
+      #startButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60%;
+        height: 5%;
+        font-size: 120%;
+        color: black;
+        background-color: white;
+        font-family: "Gotham", sans-serif;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 12%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .oil {
+        position: absolute;
+        width: 15%;
+        height: auto;
+        z-index: 1;
+        transition: transform 1s ease, opacity 1s ease;
+      }
+      .oil1 {
+        top: 20%;
+        left: 11%;
+      }
+      .oil2 {
+        top: 32%;
+        left: 27%;
+      }
+      .oil3 {
+        top: 47%;
+        left: 39%;
+      }
+      .oil4 {
+        top: 30%;
+        left: 47%;
+      }
+      #counter {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "Gotham", sans-serif;
+        font-size: 24px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 2;
+      }
     </style>
-</head>
-<body>
-    <img src="images/oil1.png" alt="" class="oil oil1">
-    <img src="images/oil2.png" alt="" class="oil oil2">
-    <img src="images/oil3.png" alt="" class="oil oil3">
-    <img src="images/oil4.png" alt="" class="oil oil4">
+  </head>
+  <body>
+    <!-- <div id="counter">Removed: 0/4</div> -->
+
+    <img src="images/oil1.png" alt="" class="oil oil1" />
+    <img src="images/oil2.png" alt="" class="oil oil2" />
+    <img src="images/oil3.png" alt="" class="oil oil3" />
+    <img src="images/oil4.png" alt="" class="oil oil4" />
 
     <script>
-  
-        let startX, startY;
-        let swipedImages = 0;
+      let swipedImages = 0;
 
+      function handleScratchStart(event) {
+        const oil = event.target;
+        if (parseFloat(oil.style.opacity) === 0) return; // Check if the image is already removed
 
-
-        function handleSwipeStart(event) {
-            startX = event.touches ? event.touches[0].clientX : event.clientX;
-            startY = event.touches ? event.touches[0].clientY : event.clientY;
-        }
-
-        function handleClick(event) {
-            event.target.style.opacity = 0;
+        oil.scratchStartTime = new Date().getTime();
+        oil.scratchInterval = setInterval(() => {
+          if (oil.style.opacity > 0) {
+            oil.style.opacity -= 0.1;
+          } else {
+            clearInterval(oil.scratchInterval);
+            oil.style.opacity = 0;
             swipedImages++;
-            if (swipedImages >= 4) {
-                window.location.href = 'page5.html'; // Change 'newpage.html' to your desired page URL
-            }
+            updateCounter();
+            checkImages();
+          }
+        }, 300); // Adjust this value to control the scratch speed
+      }
+
+      function handleScratchEnd(event) {
+        const oil = event.target;
+        clearInterval(oil.scratchInterval);
+        oil.scratchStartTime = null;
+      }
+
+      function updateCounter() {
+        const counter = document.getElementById("counter");
+        counter.textContent = `Removed: ${swipedImages}/4`;
+      }
+
+      function checkImages() {
+        if (swipedImages >= 4) {
+          window.location.href = "page5.html"; // Change 'newpage.html' to your desired page URL
         }
+      }
 
-        function handleSwipeMove(event) {
-            if (!startX || !startY) return;
+      function handleTap(event) {
+        const oil = event.target;
+        if (!oil.tapCount) {
+          oil.tapCount = 1;
+          oil.lastTapTime = new Date().getTime();
+        } else {
+          const currentTime = new Date().getTime();
+          const timeDiff = currentTime - oil.lastTapTime;
 
-            let endX = event.touches ? event.touches[0].clientX : event.clientX;
-            let endY = event.touches ? event.touches[0].clientY : event.clientY;
+          if (timeDiff < 600) {
+            // Check if the tap is within 600ms
+            oil.tapCount++;
+            oil.lastTapTime = currentTime;
 
-            let diffX = endX - startX;
-            let diffY = endY - startY;
-
-            let angle = Math.atan2(diffY, diffX) * 180 / Math.PI;
-
-            let direction;
-            if (angle >= -22.5 && angle < 22.5) {
-                direction = 'translateX(100%)'; // right
-            } else if (angle >= 22.5 && angle < 67.5) {
-                direction = 'translate(100%, 100%)'; // bottom-right
-            } else if (angle >= 67.5 && angle < 112.5) {
-                direction = 'translateY(100%)'; // bottom
-            } else if (angle >= 112.5 && angle < 157.5) {
-                direction = 'translate(-100%, 100%)'; // bottom-left
-            } else if (angle >= -67.5 && angle < -22.5) {
-                direction = 'translate(100%, -100%)'; // top-right
-            } else if (angle >= -112.5 && angle < -67.5) {
-                direction = 'translateY(-100%)'; // top
-            } else if (angle >= -157.5 && angle < -112.5) {
-                direction = 'translate(-100%, -100%)'; // top-left
-            } else {
-                direction = 'translateX(-100%)'; // left
+            if (oil.tapCount === 3) {
+              oil.style.opacity = 0;
+              swipedImages++;
+              //   updateCounter();
+              checkImages();
             }
-
-            event.target.style.transform = direction;
-            event.target.style.opacity = 0;
-
-            swipedImages++;
-            if (swipedImages >= 3) {
-                window.location.href = 'page5.html'; // Change 'newpage.html' to your desired page URL
-            }
-
-            startX = null;
-            startY = null;
+          } else {
+            oil.tapCount = 1;
+            oil.lastTapTime = currentTime;
+          }
         }
+      }
 
-        const oils = document.querySelectorAll('.oil');
+      const oils = document.querySelectorAll(".oil");
 
-        oils.forEach(oil => {
-             oil.addEventListener('click', handleClick);
+      oils.forEach((oil) => {
+        oil.style.opacity = 1;
 
-            // oil.addEventListener('mousedown', handleSwipeStart);
-            // oil.addEventListener('mousemove', handleSwipeMove);
-            // oil.addEventListener('mouseup', () => {
-            //     startX = null;
-            //     startY = null;
-            // });
+        oil.addEventListener("mousedown", handleScratchStart);
+        oil.addEventListener("mouseup", handleScratchEnd);
+        oil.addEventListener("mouseleave", handleScratchEnd);
 
-            // oil.addEventListener('touchstart', handleSwipeStart);
-            // oil.addEventListener('touchmove', handleSwipeMove);
-            // oil.addEventListener('touchend', () => {
-            //     startX = null;
-            //     startY = null;
-            // });
-        });
+        oil.addEventListener("touchstart", handleScratchStart);
+        oil.addEventListener("touchend", handleScratchEnd);
+        oil.addEventListener("touchcancel", handleScratchEnd);
+
+        oil.addEventListener("click", handleTap);
+      });
     </script>
-</body>
+  </body>
 </html>
