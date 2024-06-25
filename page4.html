@@ -1,162 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fullscreen Image</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOREAL PARIS</title>
     <style>
-          @font-face {
-            font-family: 'Gotham';
-            src: url('fonts/Gotham-Book.woff2') format('woff2'),
-                 url('fonts/Gotham-Book.woff') format('woff'),
-                 url('fonts/Gotham-Book.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background: url('images/bg3.png') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-        .oil1 {
-            position: absolute;
-            top: 20%;
-            left: 11%;
-            width: 16%;
-            height: auto;
-            z-index: 1;
-        }
-        .oil2 {
-            position: absolute;
-            top: 32%;
-            left: 27%;
-            width: 13%;
-            height: auto;
-            z-index: 1;
-        }
-        .oil3 {
-            position: absolute;
-            top: 47%;
-            left: 39%;
-            width: 15%;
-            height: auto;
-            z-index: 1;
-        }
+      @font-face {
+        font-family: "Gotham";
+        src: url("fonts/Gotham-Book.woff2") format("woff2"),
+          url("fonts/Gotham-Book.woff") format("woff"),
+          url("fonts/Gotham-Book.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: url("images/bg3.png") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+      }
+      .oil1 {
+        position: absolute;
+        top: 20%;
+        left: 11%;
+        width: 16%;
+        height: auto;
+        z-index: 1;
+      }
+      .oil2 {
+        position: absolute;
+        top: 32%;
+        left: 27%;
+        width: 13%;
+        height: auto;
+        z-index: 1;
+      }
+      .oil3 {
+        position: absolute;
+        top: 47%;
+        left: 39%;
+        width: 15%;
+        height: auto;
+        z-index: 1;
+      }
 
-        .blink {
-            position: absolute;
-            top: 48%;
-            left: 50%;
-            width: 17%;
-            height: auto;
-            z-index: 1;
-        }
+      .blink {
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        width: 17%;
+        height: auto;
+        z-index: 1;
+      }
 
-        .circle {
-            position: relative;
-            width: 330px; /* Example size */
-            height: 330px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-        
-        .hand {
-            position: absolute;
-            bottom: 50%; /* Keeps the bottom of the hand at the center of the circle */
-            left: calc(50% - 16px);; /* Starts the left of the hand at the center of the circle */
-            width: 40px;
-            height: 50%;
-            z-index: 10;
-            transform-origin: 50% 100%; /* Ensures rotation around the bottom center */
-            transform: translate(-50%, 0%); /* Correctly centers the hand horizontally */
-        }
+      .circle {
+        position: relative;
+        width: 330px; /* Example size */
+        height: 330px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
 
-        .clock-hand {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: relative;
-            bottom: -25px;
-        }
+      .hand {
+        position: absolute;
+        bottom: 50%; /* Keeps the bottom of the hand at the center of the circle */
+        left: calc(
+          50% - 16px
+        ); /* Starts the left of the hand at the center of the circle */
+        width: 40px;
+        height: 50%;
+        z-index: 10;
+        transform-origin: 50% 100%; /* Ensures rotation around the bottom center */
+        transform: translate(
+          -50%,
+          0%
+        ); /* Correctly centers the hand horizontally */
+      }
 
-        .clock {
-            position: absolute;
-            top: 12%;
-            right: 0;
-            transform: translate(-50%, -50%) rotate(300deg);
-        }
+      .clock-hand {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
+        bottom: -25px;
+      }
+
+      .clock {
+        position: absolute;
+        top: 12%;
+        right: 0;
+        transform: translate(-50%, -50%) rotate(300deg);
+      }
     </style>
-</head>
-<body>
-    <img src="images/oil1.png" alt="" class="oil1">
-    <img src="images/oil2.png" alt="" class="oil2">
-    <img src="images/oil3.png" alt="" class="oil3">
+  </head>
+  <body>
+    <img src="images/oil1.png" alt="" class="oil1" />
+    <img src="images/oil2.png" alt="" class="oil2" />
+    <img src="images/oil3.png" alt="" class="oil3" />
 
     <div class="clock">
-        <div class="circle">
-            <div class="hand">
-                <img src="images/hand.svg" alt="" class="clock-hand">
-            </div>
+      <div class="circle">
+        <div class="hand">
+          <img src="images/hand.svg" alt="" class="clock-hand" />
         </div>
+      </div>
     </div>
     <script>
-        document.querySelectorAll('body img').forEach(img => {
-            let touchStartX = 0, touchStartY = 0;
-            let touchEndX = 0, touchEndY = 0;
-    
-            img.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-                touchStartY = e.changedTouches[0].screenY;
-            });
-    
-            img.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                touchEndY = e.changedTouches[0].screenY;
-                handleSwipe(img);
-            });
-    
-            function handleSwipe(imgElement) {
-                const directionX = touchEndX - touchStartX;
-                const directionY = touchEndY - touchStartY;
-    
-                // Calculate the proportion of the swipe direction for a more natural movement
-                const proportionX = directionX / window.innerWidth * 400; // Proportion of the viewport width
-                const proportionY = directionY / window.innerHeight * 400; // Proportion of the viewport height
-    
-                imgElement.style.transition = 'transform 1s ease, opacity 1s ease';
-                imgElement.style.transform = `translate(${proportionX}vw, ${proportionY}vh)`;
-    
-                // Fade out effect
-                imgElement.style.opacity = 0;
-    
-                // Delay the removal of the image to allow the transition to complete
-                setTimeout(() => imgElement.remove(), 1000); // Adjusted to match the CSS transition duration
-            }
+      document.querySelectorAll("body img").forEach((img) => {
+        let touchStartX = 0,
+          touchStartY = 0;
+        let touchEndX = 0,
+          touchEndY = 0;
+
+        img.addEventListener("touchstart", (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
         });
 
-        const circle = document.querySelector('.circle');
-        const hand = document.querySelector('.hand'); // Select the hand element
-        let fillPercentage = 0;
-        const maxDegrees = 318; // Maximum degrees to fill
-        const maxFillPercentage = (maxDegrees / 360) * 100; // Convert degrees to percentage
-        
-        const interval = setInterval(() => {
-            fillPercentage += 1; // Increase fill percentage
-            // Ensure fillPercentage does not exceed maxFillPercentage
-            if (fillPercentage > maxFillPercentage) fillPercentage = maxFillPercentage;
-        
-            circle.style.background = `conic-gradient(red 0% ${fillPercentage}%, transparent ${fillPercentage}% 100%)`;
-        
-            // Calculate rotation angle based on maxDegrees
-            const angle = (maxDegrees * fillPercentage) / maxFillPercentage;
-            hand.style.transform = `rotate(${angle}deg)`; // Apply rotation
-        
-            if (fillPercentage >= maxFillPercentage) clearInterval(interval); // Stop the interval when maxFillPercentage is reached
-        }, 100); // Update every 100 milliseconds
+        img.addEventListener("touchend", (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          touchEndY = e.changedTouches[0].screenY;
+          handleSwipe(img);
+        });
+
+        function handleSwipe(imgElement) {
+          const directionX = touchEndX - touchStartX;
+          const directionY = touchEndY - touchStartY;
+
+          // Calculate the proportion of the swipe direction for a more natural movement
+          const proportionX = (directionX / window.innerWidth) * 400; // Proportion of the viewport width
+          const proportionY = (directionY / window.innerHeight) * 400; // Proportion of the viewport height
+
+          imgElement.style.transition = "transform 1s ease, opacity 1s ease";
+          imgElement.style.transform = `translate(${proportionX}vw, ${proportionY}vh)`;
+
+          // Fade out effect
+          imgElement.style.opacity = 0;
+
+          // Delay the removal of the image to allow the transition to complete
+          setTimeout(() => imgElement.remove(), 1000); // Adjusted to match the CSS transition duration
+        }
+      });
+
+      const circle = document.querySelector(".circle");
+      const hand = document.querySelector(".hand"); // Select the hand element
+      let fillPercentage = 0;
+      const maxDegrees = 318; // Maximum degrees to fill
+      const maxFillPercentage = (maxDegrees / 360) * 100; // Convert degrees to percentage
+
+      const interval = setInterval(() => {
+        fillPercentage += 1; // Increase fill percentage
+        // Ensure fillPercentage does not exceed maxFillPercentage
+        if (fillPercentage > maxFillPercentage)
+          fillPercentage = maxFillPercentage;
+
+        circle.style.background = `conic-gradient(red 0% ${fillPercentage}%, transparent ${fillPercentage}% 100%)`;
+
+        // Calculate rotation angle based on maxDegrees
+        const angle = (maxDegrees * fillPercentage) / maxFillPercentage;
+        hand.style.transform = `rotate(${angle}deg)`; // Apply rotation
+
+        if (fillPercentage >= maxFillPercentage) clearInterval(interval); // Stop the interval when maxFillPercentage is reached
+      }, 100); // Update every 100 milliseconds
     </script>
-</body>
+  </body>
 </html>
