@@ -62,7 +62,7 @@
         left: calc(
           50% - 16px
         ); /* Starts the left of the hand at the center of the circle */
-        width: 40px;
+        width: 10vw;
         height: 50%;
         z-index: 10;
         transform-origin: 50% 100%; /* Ensures rotation around the bottom center */
@@ -82,8 +82,8 @@
 
       .circle {
         position: relative;
-        width: 165px; /* Example size */
-        height: 165px;
+        width: 15vw;
+        height: 9vh;
         border-radius: 50%;
         overflow: hidden;
       }
@@ -114,8 +114,8 @@
 
     <div class="clock">
       <div class="circle">
-        <div class="hand">
-          <img src="images/hand.svg" alt="" class="clock-hand" />
+        <div class="">
+          <!-- <img src="images/hand.svg" alt="" class="clock-hand" /> -->
         </div>
       </div>
     </div>
@@ -162,20 +162,31 @@
       const maxDegrees = 318; // Maximum degrees to fill
       const maxFillPercentage = (maxDegrees / 360) * 100; // Convert degrees to percentage
 
-      const interval = setInterval(() => {
-        fillPercentage += 1; // Increase fill percentage
-        // Ensure fillPercentage does not exceed maxFillPercentage
-        if (fillPercentage > maxFillPercentage)
-          fillPercentage = maxFillPercentage;
+      function startAnimation() {
+        const interval = setInterval(() => {
+          fillPercentage += 1; // Increase fill percentage
+          // Ensure fillPercentage does not exceed maxFillPercentage
+          if (fillPercentage > maxFillPercentage)
+            fillPercentage = maxFillPercentage;
 
-        circle.style.background = `conic-gradient(violet 0% ${fillPercentage}%, transparent ${fillPercentage}% 100%)`;
+          circle.style.background = `conic-gradient(violet 0% ${fillPercentage}%, transparent ${fillPercentage}% 100%)`;
 
-        // Calculate rotation angle based on maxDegrees
-        const angle = (maxDegrees * fillPercentage) / maxFillPercentage;
-        hand.style.transform = `rotate(${angle}deg)`; // Apply rotation
+          // Calculate rotation angle based on maxDegrees
+          const angle = (maxDegrees * fillPercentage) / maxFillPercentage;
+          // hand.style.transform = `rotate(${angle}deg)`; // Apply rotation
 
-        if (fillPercentage >= maxFillPercentage) clearInterval(interval); // Stop the interval when maxFillPercentage is reached
-      }, 100); // Update every 100 milliseconds
+          if (fillPercentage >= maxFillPercentage) {
+            clearInterval(interval); // Stop the interval when maxFillPercentage is reached
+            setTimeout(() => {
+              fillPercentage = 0; // Reset fillPercentage
+              startAnimation(); // Restart the animation
+            }, 1000); // Wait 1 second before restarting
+          }
+        }, 100);
+      }
+
+      startAnimation(); // Start the initial animation
+      // Update every 100 milliseconds
     </script>
   </body>
 </html>
