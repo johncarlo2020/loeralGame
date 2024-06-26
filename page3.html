@@ -78,6 +78,55 @@
         border-radius: 5px;
         z-index: 2;
       }
+
+      .hand {
+        position: absolute;
+        bottom: 50%; /* Keeps the bottom of the hand at the center of the circle */
+        left: calc(
+          50% - 16px
+        ); /* Starts the left of the hand at the center of the circle */
+        width: 40px;
+        height: 50%;
+        z-index: 10;
+        transform-origin: 50% 100%; /* Ensures rotation around the bottom center */
+        transform: translate(
+          -50%,
+          0%
+        ); /* Correctly centers the hand horizontally */
+      }
+
+      .clock-hand {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
+        bottom: -25px;
+      }
+
+      .circle {
+        position: relative;
+        width: 165px; /* Example size */
+        height: 165px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      #clock {
+        position: absolute;
+        top: 6%;
+        left: 70%;
+        width: 24%;
+        height: auto;
+        z-index: 1;
+      }
+      .clock {
+        position: absolute;
+        top: 9%;
+        left: 88.5%;
+        width: 31%;
+        height: auto;
+        z-index: 1;
+        transform: translate(-50%, -50%) rotate(300deg);
+      }
     </style>
   </head>
   <body>
@@ -87,7 +136,15 @@
     <img src="images/oil2.png" alt="" class="oil oil2" />
     <img src="images/oil3.png" alt="" class="oil oil3" />
     <img src="images/oil4.png" alt="" class="oil oil4" />
+    <img src="images/clock.png" alt="" id="clock" class="oil3" />
 
+    <div class="clock">
+      <div class="circle">
+        <div class="hand">
+          <img src="images/hand.svg" alt="" class="clock-hand" />
+        </div>
+      </div>
+    </div>
     <script>
       let swipedImages = 0;
 
@@ -168,6 +225,27 @@
 
         oil.addEventListener("click", handleTap);
       });
+
+      const circle = document.querySelector(".circle");
+      const hand = document.querySelector(".hand"); // Select the hand element
+      let fillPercentage = 0;
+      const maxDegrees = 318; // Maximum degrees to fill
+      const maxFillPercentage = (maxDegrees / 360) * 100; // Convert degrees to percentage
+
+      const interval = setInterval(() => {
+        fillPercentage += 1; // Increase fill percentage
+        // Ensure fillPercentage does not exceed maxFillPercentage
+        if (fillPercentage > maxFillPercentage)
+          fillPercentage = maxFillPercentage;
+
+        circle.style.background = `conic-gradient(violet 0% ${fillPercentage}%, transparent ${fillPercentage}% 100%)`;
+
+        // Calculate rotation angle based on maxDegrees
+        const angle = (maxDegrees * fillPercentage) / maxFillPercentage;
+        hand.style.transform = `rotate(${angle}deg)`; // Apply rotation
+
+        if (fillPercentage >= maxFillPercentage) clearInterval(interval); // Stop the interval when maxFillPercentage is reached
+      }, 100);
     </script>
   </body>
 </html>
