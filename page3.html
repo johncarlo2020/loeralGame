@@ -231,12 +231,16 @@
       let fillPercentage = 0;
       const maxDegrees = 318; // Maximum degrees to fill
       const maxFillPercentage = (maxDegrees / 360) * 100; // Convert degrees to percentage
+      const animationDuration = 30000; // Duration in milliseconds (30 seconds)
+      const intervalTime = 100; // Interval time in milliseconds
+      const fillIncrement =
+        (maxFillPercentage * intervalTime) / animationDuration; // Calculate the increment
 
       function startAnimation() {
         var img = document.getElementById("clock");
         img.src = "images/clock.png";
         const interval = setInterval(() => {
-          fillPercentage += 1; // Increase fill percentage
+          fillPercentage += fillIncrement; // Increase fill percentage
           // Ensure fillPercentage does not exceed maxFillPercentage
           if (fillPercentage > maxFillPercentage)
             fillPercentage = maxFillPercentage;
@@ -248,18 +252,20 @@
           // hand.style.transform = `rotate(${angle}deg)`; // Apply rotation
 
           if (fillPercentage >= maxFillPercentage) {
+            clearInterval(interval); // Stop the interval
             var img = document.getElementById("clock");
             img.src = "images/clock1.png";
-            clearInterval(interval); // Stop the interval when maxFillPercentage is reached
+
             setTimeout(() => {
-              fillPercentage = 0; // Reset fillPercentage
-              startAnimation(); // Restart the animation
-            }, 1000); // Wait 1 second before restarting
+              window.location.href = "page6.html";
+            }, 1000);
+            // Wait 1 second before restarting (if needed)
           }
-        }, 100);
+        }, intervalTime);
       }
 
-      startAnimation(); // Start the initial animation
+      startAnimation(); // Start
+      // Start the initial animation
     </script>
   </body>
 </html>
